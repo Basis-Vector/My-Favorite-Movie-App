@@ -18,6 +18,7 @@ class _SplashScreenState extends State<SplashScreen> {
         child: GestureDetector(
           onTap: (){
             Navigator.pushNamed(context, "/movieListScreen");
+            //Navigator.pushNamed(context, "/movieListScreen");
           },
           child: Center(
             child: Text(

@@ -19,17 +19,20 @@ class MovieCardAdapter extends TypeAdapter<MovieCard> {
     return MovieCard(
       movieName: fields[0] as String?,
       directorName: fields[1] as String?,
+      moviePoster: fields[2] as String?,
     );
   }
 
   @override
   void write(BinaryWriter writer, MovieCard obj) {
     writer
-      ..writeByte(2)
+      ..writeByte(3)
       ..writeByte(0)
       ..write(obj.movieName)
       ..writeByte(1)
-      ..write(obj.directorName);
+      ..write(obj.directorName)
+      ..writeByte(2)
+      ..write(obj.moviePoster);
   }
 
   @override

@@ -16,13 +16,14 @@ class MoviesListBloc extends Bloc<MoviesListEvent, MoviesListState> {
       yield* _mapInitialEventToState();
     } else if (event is MovieAddEvent) {
       yield* _mapMovieAddEventToState(
-          directorName: event.directorName, movieName: event.movieName);
+          directorName: event.directorName, movieName: event.movieName, moviePoster: event.moviePoster);
     }
     if (event is MovieEditEvent) {
       yield* _mapMovieEditEventToState(
         movieName: event.movieName,
         directorName: event.directorName,
         index: event.index,
+        moviePoster: event.moviePoster,
       );
     }
 
@@ -38,18 +39,19 @@ class MoviesListBloc extends Bloc<MoviesListEvent, MoviesListState> {
   }
 
   Stream<MoviesListState> _mapMovieAddEventToState(
-      {required String movieName, required String directorName}) async* {
+      {required String movieName, required String directorName,required String moviePoster}) async* {
     yield MoviesLoading();
-    await _addToMoviesList(movieName: movieName, directorName: directorName);
+    await _addToMoviesList(movieName: movieName, directorName: directorName,moviePoster:moviePoster );
     yield CurrentMovieState(moviesList: _moviesListCard);
   }
 
   Stream<MoviesListState> _mapMovieEditEventToState(
       {required String movieName,
       required String directorName,
+      required String moviePoster,
       required int index}) async* {
     yield MoviesLoading();
-    await _updateMovie(movieName: movieName,directorName: directorName, index: index);
+    await _updateMovie(movieName: movieName,directorName: directorName, index: index,moviePoster:moviePoster);
     yield CurrentMovieState(moviesList: _moviesListCard);
   }
 
@@ -70,18 +72,19 @@ class MoviesListBloc extends Bloc<MoviesListEvent, MoviesListState> {
   }
 
   Future<void> _addToMoviesList(
-      {required String movieName, required String directorName}) async {
+      {required String movieName, required String directorName, required String moviePoster,}) async {
     await _movieDatabase
-        .addToBox(MovieCard(movieName: movieName, directorName: directorName));
+        .addToBox(MovieCard(movieName: movieName, directorName: directorName, moviePoster: moviePoster));
     await _getMoviesList();
   }
 
   Future<void> _updateMovie(
       {required String movieName,
         required String directorName,
+        required String moviePoster,
         required int index}) async {
     await _movieDatabase.updateNote(
-        index, MovieCard(movieName: movieName, directorName: directorName));
+        index, MovieCard(movieName: movieName, directorName: directorName,moviePoster: moviePoster));
     await _getMoviesList();
   }
 

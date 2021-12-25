@@ -8,6 +8,8 @@ class MovieCard extends HiveObject {
   String? movieName;
   @HiveField(1)
   String? directorName;
+  @HiveField(2)
+  String? moviePoster;
 
-  MovieCard({this.movieName, this.directorName});
+  MovieCard({this.movieName, this.directorName,this.moviePoster});
 }

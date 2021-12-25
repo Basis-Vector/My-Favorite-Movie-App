@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -64,6 +66,11 @@ class _MoviesListScreenState extends State<MoviesListScreen> {
                             decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(10),
                                 color: Colors.lightBlue),
+                            child: Image.memory(
+                              base64Decode(list[index].moviePoster ?? ""),
+                              fit: BoxFit.fill,
+                              alignment: Alignment.center,
+                            ),
                           ),
                           Padding(
                             padding: const EdgeInsets.only(left: 10.0, top: 15),
@@ -106,11 +113,12 @@ class _MoviesListScreenState extends State<MoviesListScreen> {
                                       context,
                                       "/editMovieScreen",
                                       arguments: MovieTileArgument(
-                                        movieName: list[index].movieName,
-                                        directorName: list[index].directorName,
-                                        index: index,
-                                        isNewMovie: false,
-                                      ),
+                                          movieName: list[index].movieName,
+                                          directorName:
+                                              list[index].directorName,
+                                          index: index,
+                                          isNewMovie: false,
+                                          moviePoster: list[index].moviePoster),
                                     );
                                   },
                                 ),
@@ -166,7 +174,11 @@ class _MoviesListScreenState extends State<MoviesListScreen> {
             context,
             "/editMovieScreen",
             arguments: MovieTileArgument(
-                movieName: "", directorName: "", index: 0, isNewMovie: true),
+                movieName: "",
+                directorName: "",
+                index: 0,
+                isNewMovie: true,
+                moviePoster: ""),
           );
         },
         // }
@@ -179,6 +191,7 @@ class _MoviesListScreenState extends State<MoviesListScreen> {
 
 class MovieTileArgument {
   String? movieName;
+  String? moviePoster;
   bool? isNewMovie;
   String? directorName;
   int? index;
@@ -188,5 +201,6 @@ class MovieTileArgument {
     required this.directorName,
     required this.index,
     required this.isNewMovie,
+    required this.moviePoster,
   });
 }

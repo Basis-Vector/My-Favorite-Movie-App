@@ -54,7 +54,7 @@ class MyApp extends StatelessWidget {
                   value: _movieBloc,
                   child: EditMovieScreen(
                     index: args.index,
-                    movieCard: MovieCard(movieName: args.movieName, directorName: args.directorName),
+                    movieCard: MovieCard(movieName: args.movieName, directorName: args.directorName,moviePoster: args.moviePoster),
                     isNewMovie: args.isNewMovie,
                   ),
                 );
